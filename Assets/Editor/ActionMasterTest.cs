@@ -10,6 +10,7 @@ public class ActionMasterTest {
 	private ActionMaster.Action endTurn = ActionMaster.Action.EndTurn;
 	private ActionMaster.Action tidy = ActionMaster.Action.Tidy;
 	private ActionMaster.Action endGame = ActionMaster.Action.EndGame;
+	private ActionMaster.Action reset = ActionMaster.Action.Reset;
 	private ActionMaster actionMaster;
 
 	[SetUp]
@@ -49,5 +50,11 @@ public class ActionMasterTest {
 	}
 
 	[Test]
-
+	public void T05BowlFor10RoundsScoreStrike(){
+		for(int i=0;i<9;i++){
+			actionMaster.Bowl(8);
+			actionMaster.Bowl(2);
+		}
+		Assert.AreEqual(reset, actionMaster.Bowl(10));
+	}
 }

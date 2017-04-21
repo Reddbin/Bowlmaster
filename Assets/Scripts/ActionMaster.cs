@@ -13,14 +13,18 @@ public class ActionMaster {
 		if(pins <0 || pins >10) {throw new UnityException("Invalid pin count");}
 
 		//other Behaviour here, e.g. last frame
-		if(bowl >= 20){
+		if(bowl == 20 ){
 			bowl = 1;
 			return Action.EndGame;
 		}
 
 		if(pins == 10){
 			bowl += 2;
-			return Action.EndTurn;
+			if(bowl < 19){
+				return Action.EndTurn;
+			}else{
+				return Action.Reset;
+			}
 		}
 			
 		if(bowl % 2 != 0) { // Mid frame (or last frame)
