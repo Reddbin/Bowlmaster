@@ -13,32 +13,29 @@ public class ActionMaster {
 		if(pins <0 || pins >10) {throw new UnityException("Invalid pin count");}
 
 		//other Behaviour here, e.g. last frame
-		if(bowl == 20 ){
-			bowl = 1;
-			return Action.EndGame;
+		if(bowl >= 19 ){ // Last frame
+			if(bowl >= 23){
+				bowl = 1;
+				return Action.EndGame;
+			}
+			if(pins == 10){
+				bowl += 2;
+				return Action.Reset;
+			}else{
+				// jump to last throw
+				bowl += 5;
+				return Action.Tidy;
+			}
 		}
 
 		if(pins == 10){
 			bowl += 2;
-			if(bowl < 19){
-				return Action.EndTurn;
-			}else if(bowl < 23){
-				return Action.Reset;
-			}else{
-				//bowl = 1;
-				return Action.EndGame;
-			}
+			return Action.EndTurn;
 		}
 			
 		if(bowl % 2 != 0) { // Mid frame (or last frame)
 			bowl += 1;
-			if(bowl == 24){
-				return Action.EndGame;
-			}else{
-				return Action.Tidy;
-			}
-
-
+			return Action.Tidy;
 		} else if (bowl % 2 == 0){ // End of frame
 			bowl += 1;
 			return Action.EndTurn;
