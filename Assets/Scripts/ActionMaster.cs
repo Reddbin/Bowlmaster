@@ -22,8 +22,10 @@ public class ActionMaster {
 			bowl += 2;
 			if(bowl < 19){
 				return Action.EndTurn;
-			}else{
+			}else if(bowl < 23){
 				return Action.Reset;
+			}else{
+				return Action.EndGame;
 			}
 		}
 			

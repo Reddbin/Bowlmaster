@@ -57,4 +57,15 @@ public class ActionMasterTest {
 		}
 		Assert.AreEqual(reset, actionMaster.Bowl(10));
 	}
+
+	[Test]
+	public void T06BowlFor10RoundsScore3Strikes(){
+		for(int i=0;i<9;i++){
+			actionMaster.Bowl(8);
+			actionMaster.Bowl(2);
+		}
+		actionMaster.Bowl(10);
+		actionMaster.Bowl(10);
+		Assert.AreEqual(endGame, actionMaster.Bowl(10));
+	}
 }
