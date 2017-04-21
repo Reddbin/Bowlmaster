@@ -25,13 +25,20 @@ public class ActionMaster {
 			}else if(bowl < 23){
 				return Action.Reset;
 			}else{
+				//bowl = 1;
 				return Action.EndGame;
 			}
 		}
 			
 		if(bowl % 2 != 0) { // Mid frame (or last frame)
 			bowl += 1;
-			return Action.Tidy;
+			if(bowl == 24){
+				return Action.EndGame;
+			}else{
+				return Action.Tidy;
+			}
+
+
 		} else if (bowl % 2 == 0){ // End of frame
 			bowl += 1;
 			return Action.EndTurn;

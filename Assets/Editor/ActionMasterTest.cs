@@ -40,7 +40,7 @@ public class ActionMasterTest {
 	}
 
 	[Test]
-	public void T04BowlFor10RoundsNoStrike (){
+	public void T04FinaloundsNoStrike (){
 		for(int i=0;i<9;i++){
 			actionMaster.Bowl(8);
 			actionMaster.Bowl(2);
@@ -50,7 +50,7 @@ public class ActionMasterTest {
 	}
 
 	[Test]
-	public void T05BowlFor10RoundsScoreStrike(){
+	public void T05FinalRoundsScoreStrike(){
 		for(int i=0;i<9;i++){
 			actionMaster.Bowl(8);
 			actionMaster.Bowl(2);
@@ -59,7 +59,7 @@ public class ActionMasterTest {
 	}
 
 	[Test]
-	public void T06BowlFor10RoundsScore3Strikes(){
+	public void T06FinalRoundsScore3Strikes(){
 		for(int i=0;i<9;i++){
 			actionMaster.Bowl(8);
 			actionMaster.Bowl(2);
@@ -67,5 +67,16 @@ public class ActionMasterTest {
 		actionMaster.Bowl(10);
 		actionMaster.Bowl(10);
 		Assert.AreEqual(endGame, actionMaster.Bowl(10));
+	}
+
+	[Test]
+	public void T07FinalRoundScore2Strikes8(){
+		for(int i=0;i<9;i++){
+			actionMaster.Bowl(8);
+			actionMaster.Bowl(2);
+		}
+		actionMaster.Bowl(10);
+		actionMaster.Bowl(10);
+		Assert.AreEqual(endGame, actionMaster.Bowl(8));
 	}
 }
