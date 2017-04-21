@@ -47,4 +47,7 @@ public class ActionMasterTest {
 		actionMaster.Bowl(8);
 		Assert.AreEqual(endGame, actionMaster.Bowl(2));
 	}
+
+	[Test]
+
 }
