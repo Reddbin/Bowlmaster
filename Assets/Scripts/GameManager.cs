@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour {
 	//private List<int> scores = new List<int>();
 	private PinSetter pinSetter;
 
-	private ScoreDisplay scoreDisplay;
+	//private ScoreDisplay scoreDisplay;
 	private Ball ball;
 
 	// Use this for initialization
 	void Start () {
-		scoreDisplay = GameObject.FindObjectOfType<ScoreDisplay>();
+		//scoreDisplay = GameObject.FindObjectOfType<ScoreDisplay>();
 		ball = GameObject.FindObjectOfType<Ball>();
 		pinSetter = GameObject.FindObjectOfType<PinSetter>();
 	}
