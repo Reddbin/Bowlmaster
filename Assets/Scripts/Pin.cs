@@ -42,8 +42,6 @@ public class Pin : MonoBehaviour {
             transform.Translate(distToRaise * Vector3.up, Space.World);
 
         }
-        
-
     }
 
     //lowering pins == pins are allowed to fall again, prevents instantanious movement of pin which looks bad
