@@ -41,12 +41,13 @@ public class ScoreMaster {
 					}
 				}
 			}else{
-				// in the final frame only the sum of all bowls is important, strikes and spare only reward a third ball, and a strike counts as one ball
-				int frame = 0;
-				for(int i=j-1;i<rolls.Count;i++){
-					frame += rolls[i];
+				// in the final frame only the sum of all bowls is important, strikes and spare simply reward a third ball, and a strike counts as one ball
+				if(rolls[j-1]+rolls[j]<10){                           // no third bowl awarded
+					frameList.Add(rolls[j-1]+rolls[j]);
+				}else if(rolls[j-1]+rolls[j]>=10 && j<rolls.Count-1){ // third bowl awarded and thrown
+					frameList.Add(rolls[j-1]+rolls[j]+rolls[j+1]);
 				}
-				frameList.Add(frame);
+				// don't do anything if third bowl is awarded but not thrown
 				break;
 			}
 		}
