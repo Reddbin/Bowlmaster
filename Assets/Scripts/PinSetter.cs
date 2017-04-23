@@ -6,22 +6,29 @@ using UnityEngine.UI;
 public class PinSetter : MonoBehaviour {
 
     public GameObject pinsPrefab;
-    public int lastStandingCount = -1;
     public Text pinDisplay;
 
-    private Ball ball;
+	private int lastStandingCount = -1;
     private float lastChangeTime;
-    private bool ballEnteredBox = false;
+	private int lastSettledCount = 10;
+    private bool ballLeftBox = false;
+
+	// has to be at this level, since we only want one instance
+	private ActionMaster actionMaster = new ActionMaster();
+
+	private Ball ball;
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
         ball = GameObject.FindObjectOfType<Ball>();
+		animator = GetComponent<Animator>();
 	}
 
     void Update()
     {
         pinDisplay.text = CountStanding().ToString();
-        if (ballEnteredBox)
+        if (ballLeftBox)
         {
             UpdateStandingCountAndSettle();
         }
@@ -43,6 +50,7 @@ public class PinSetter : MonoBehaviour {
             //TODO make this actually dependend on whether no pin is undecided
             // Call PinsHaveSettled() when they have
             PinsHaveSettled();
+			Debug.Log("PinsHaveSettled called");
         }
         
         
@@ -51,14 +59,29 @@ public class PinSetter : MonoBehaviour {
 
     void PinsHaveSettled()
     {
+		int pinFall = lastSettledCount - CountStanding();
+
+		lastSettledCount = CountStanding();
+		ActionMaster.Action action = actionMaster.Bowl(pinFall);
+		if( action == ActionMaster.Action.Tidy ){
+			animator.SetTrigger("tidyTrigger");
+		}
+		if(action == ActionMaster.Action.Reset ){
+			animator.SetTrigger("resetTrigger");
+			lastSettledCount = 10;
+		}
+		if(action == ActionMaster.Action.EndTurn ){
+			animator.SetTrigger("resetTrigger");
+			lastSettledCount = 10;
+		}
         ball.Reset();
         lastStandingCount = -1;  // Indicates new frame
         pinDisplay.color = Color.green;
-        ballEnteredBox = false;
+        ballLeftBox = false;
     }
 
 
-    //loops through all pins in the scene, returns current number of standing pins
+    //loops through all pins in the scene, returns number of standing pins
     int CountStanding()
     {
         
@@ -71,13 +94,12 @@ public class PinSetter : MonoBehaviour {
                 counter++;
             }
         }
-        
-        return counter;
+        //number of fallen pins
+		return counter;
     }
 
     public void RaisePins()
     {
-        Debug.Log("Raising pins");
         foreach(Pin pin in GameObject.FindObjectsOfType<Pin>())
         {
             pin.Raise();
@@ -86,7 +108,6 @@ public class PinSetter : MonoBehaviour {
 
     public void LowerPinss()
     {
-        Debug.Log("Lowering pins");
         foreach(Pin pin in GameObject.FindObjectsOfType<Pin>())
         {
             pin.Lower();
@@ -95,7 +116,6 @@ public class PinSetter : MonoBehaviour {
 
     public void RenewPins()
     {
-        Debug.Log("Renewing pins");
         Instantiate(pinsPrefab);
         foreach (Pin pin in GameObject.FindObjectsOfType<Pin>())
         {
@@ -103,14 +123,9 @@ public class PinSetter : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //check for a ball and do stuff
-        Ball ball = other.GetComponent<Ball>();
-        if (ball)
-        {
-            pinDisplay.color = Color.red;
-            ballEnteredBox = true;
-        }
-    }
+
+	public void UpdateBallStatus(){
+		pinDisplay.color = Color.red;
+		ballLeftBox = true;
+	}
 }

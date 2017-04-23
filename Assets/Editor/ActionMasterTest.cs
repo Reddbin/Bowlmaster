@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 using NUnit.Framework;
 
 [TestFixture]
@@ -11,11 +12,11 @@ public class ActionMasterTest {
 	private ActionMaster.Action tidy = ActionMaster.Action.Tidy;
 	private ActionMaster.Action endGame = ActionMaster.Action.EndGame;
 	private ActionMaster.Action reset = ActionMaster.Action.Reset;
-	private ActionMaster actionMaster;
+	private List<int> pinFalls;
 
 	[SetUp]
-	public void Setup (){
-		actionMaster = new ActionMaster();
+	public void Setup(){
+		pinFalls = new List<int>();
 	}
 
 	[Test]
@@ -25,60 +26,83 @@ public class ActionMasterTest {
 
 	[Test]
 	public void T01OneStrikeReturnsEndTurn(){
-		Assert.AreEqual(endTurn, actionMaster.Bowl(10));
+		pinFalls.Add(10);
+		Assert.AreEqual(endTurn, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
 	public void T02Bowl8ReturnsTidy (){
-		Assert.AreEqual(tidy, actionMaster.Bowl(8));
+		pinFalls.Add(8);
+		Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
 	public void T03Bowl82SpareReturnsEndTurn(){
-		actionMaster.Bowl(8);
-		Assert.AreEqual(endTurn, actionMaster.Bowl(2));
+		int[] rolls = {8,2};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(endTurn, ActionMaster.NextAction(pinFalls));
+	}
+		
+	[Test]
+	public void T04FinalRound28SpareReturnReset(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 2,8};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(reset, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
-	public void T04FinaloundsNoStrike (){
-		for(int i=0;i<9;i++){
-			actionMaster.Bowl(8);
-			actionMaster.Bowl(2);
-		}
-		actionMaster.Bowl(8);
-		Assert.AreEqual(endGame, actionMaster.Bowl(2));
+	public void T05FinalRoundStrikeReturnReset(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(reset, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
-	public void T05FinalRoundsScoreStrike(){
-		for(int i=0;i<9;i++){
-			actionMaster.Bowl(8);
-			actionMaster.Bowl(2);
-		}
-		Assert.AreEqual(reset, actionMaster.Bowl(10));
+	public void T06FinalRound22splitReturnEndGame(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 2,2};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(endGame, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
-	public void T06FinalRoundsScore3Strikes(){
-		for(int i=0;i<9;i++){
-			actionMaster.Bowl(8);
-			actionMaster.Bowl(2);
-		}
-		actionMaster.Bowl(10);
-		actionMaster.Bowl(10);
-		Assert.AreEqual(endGame, actionMaster.Bowl(10));
+	public void T07FinalRound2ReturnTidy(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 2};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
 	}
 
 	[Test]
-	public void T07FinalRoundScore2Strikes8(){
-		for(int i=0;i<9;i++){
-			actionMaster.Bowl(8);
-			actionMaster.Bowl(2);
-		}
-		actionMaster.Bowl(10);
-		actionMaster.Bowl(10);
-		Assert.AreEqual(endGame, actionMaster.Bowl(8));
+	public void T09FinalRoundStrike2ReturnTidy(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10,2};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
 	}
 
+	[Test]
+	public void T08GameEndsAfterBowl21(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10,10,10};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(endGame, ActionMaster.NextAction(pinFalls));
+	}
 
+	[Test]
+	public void T10FinalRoundStrikeThen0(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10,0};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
+	}
+
+	[Test]
+	public void T11Score0Then10Then1ReturnTidy(){
+		int[] rolls = {0,10,1};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
+	}
+
+	[Test]
+	public void T12Dondi10ThFrameTurkey(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10,10,10};
+		pinFalls = rolls.ToList();
+		Assert.AreEqual(endGame, ActionMaster.NextAction(pinFalls));
+	}
 }

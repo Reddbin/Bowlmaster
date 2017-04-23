@@ -21,12 +21,16 @@ public class Ball : MonoBehaviour {
 
     public void Launch(Vector3 velocity)
     {
-        inPlay = true;
-        ballRigidBody.useGravity = true;
-        ballRigidBody.velocity = velocity;
+		// move the if to BallDragLauch part of the code?
+		if(!inPlay){
+			inPlay = true;
+			ballRigidBody.useGravity = true;
+			ballRigidBody.velocity = velocity;
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
+			audioSource = GetComponent<AudioSource>();
+			audioSource.Play();
+		}
+        
     }
 
     public bool IsInPlay()
@@ -41,6 +45,7 @@ public class Ball : MonoBehaviour {
         ballRigidBody.useGravity = false;
         inPlay = false;
         transform.position = startPosition;
-        Debug.Log("Reset requested");
+		transform.rotation = Quaternion.identity;
+        //Debug.Log("Reset requested");
     }
 }
