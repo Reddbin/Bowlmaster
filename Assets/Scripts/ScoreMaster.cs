@@ -27,7 +27,12 @@ public class ScoreMaster {
 				strikeFrame += 10;
 			}else{
 				frame += roll;
-				counter++;
+				if(frame == 10){
+					
+				}else{
+					counter++;
+				}
+
 			}
 
 			if(counter == 2){
