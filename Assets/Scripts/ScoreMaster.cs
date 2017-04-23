@@ -42,9 +42,6 @@ public class ScoreMaster {
 				}
 
 			}
-
-
-
 			if(counter == 2){
 				frameList.Add(frame);
 				frame = 0;
