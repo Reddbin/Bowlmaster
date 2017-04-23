@@ -16,56 +16,40 @@ public class ScoreMaster {
 		return cumulativeScore;
 	}
 
+	// Returns a list of scores for individual frames
 	public static List<int> ScoreFrames (List<int> rolls){
 		List<int> frameList = new List<int>();
 
-		int strikeFrame = 0;
-		int spareFrame = 0;
-		int frame = 0;
-		int counter = 0;
-		for(int j=0;j<rolls.Count;j++){
-			if(frameList.Count<=8){
-				if(spareFrame != 0){
-					spareFrame += rolls[j];
-					frameList.Add(spareFrame);
-					spareFrame = 0;
-				}
-				if(rolls[j] == 10){
-					// look at next two entrys
-					if(j < rolls.Count-2){
-						for(int i = j; i<j+3;i++){
-							strikeFrame += rolls[i];
-						}
-						frameList.Add(strikeFrame);
-						strikeFrame = 0;
+		// We look at rolls in pairs, therefore j+=2
+		for(int j=1;j<rolls.Count;j+=2){
+			if(frameList.Count< 9){ // handle last frame seperatly, one entry == one frame
+				if(rolls[j-1] == 10){
+					// look at next two entrys if they exist to deal with the strike
+					if(j < rolls.Count-1){
+						frameList.Add(10+rolls[j]+rolls[j+1]);
 					}
+					// Strike just has one bowl
+					j--;
 				}else{
-					frame += rolls[j];
-					if(frame == 10){
-						spareFrame = 10;
-						frame = 0;
-						counter = 0;
+					//handling the split, i.e. adding next roll to the frame score
+					if(rolls[j-1]+ rolls[j] == 10){
+						if(j<rolls.Count-1){
+							frameList.Add(10+rolls[j+1]);
+						}
 					}else{
-						counter++;
+						frameList.Add(rolls[j-1]+ rolls[j]);
 					}
-				}
-
-				if(counter == 2){
-					frameList.Add(frame);
-					frame = 0;
-					counter = 0;
 				}
 			}else{
-				for(int i=j;i<rolls.Count;i++){
+				// in the final frame only the sum of all bowls is important, strikes and spare only reward a third ball, and a strike counts as one ball
+				int frame = 0;
+				for(int i=j-1;i<rolls.Count;i++){
 					frame += rolls[i];
 				}
 				frameList.Add(frame);
 				break;
 			}
-
 		}
-
-
 		return frameList;
 	}
 
