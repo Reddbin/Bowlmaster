@@ -20,10 +20,19 @@ public class ScoreMaster {
 		List<int> frameList = new List<int>();
 
 		int strikeFrame =0;
+		int strikeCounter = -1;
 		int spareFrame = 0;
 		int frame = 0;
 		int counter = 0;
 		foreach(int roll in rolls){
+			if(strikeCounter != -1){
+				strikeFrame += roll;
+				strikeCounter--;
+				if(strikeCounter ==0){
+					frameList.Add(strikeFrame);
+					strikeCounter--;
+				}
+			}
 			if(spareFrame != 0){
 				spareFrame += roll;
 				frameList.Add(spareFrame);
@@ -31,6 +40,7 @@ public class ScoreMaster {
 			}
 			if(roll == 10){
 				strikeFrame += 10;
+				strikeCounter = 2;
 			}else{
 				frame += roll;
 				if(frame == 10){
@@ -40,8 +50,8 @@ public class ScoreMaster {
 				}else{
 					counter++;
 				}
-
 			}
+
 			if(counter == 2){
 				frameList.Add(frame);
 				frame = 0;
