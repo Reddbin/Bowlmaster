@@ -24,46 +24,45 @@ public class ScoreMaster {
 		int frame = 0;
 		int counter = 0;
 		for(int j=0;j<rolls.Count;j++){
-			
-//			if(strikeCounter != -1){
-//				strikeFrame += roll;
-//				strikeCounter--;
-//				if(strikeCounter ==0){
-//					frameList.Add(strikeFrame);
-//					strikeCounter--;
-//				}
-//			}
-			if(spareFrame != 0){
-				spareFrame += rolls[j];
-				frameList.Add(spareFrame);
-				spareFrame = 0;
-			}
-			if(rolls[j] == 10){
-				// look at next two entrys
-				//int strikePos = rolls.IndexOf(roll);
-				if(j < rolls.Count-2){
-					for(int i = j; i<j+3;i++){
-						strikeFrame += rolls[i];
-					}
-					frameList.Add(strikeFrame);
-					strikeFrame = 0;
+			if(frameList.Count<=8){
+				if(spareFrame != 0){
+					spareFrame += rolls[j];
+					frameList.Add(spareFrame);
+					spareFrame = 0;
 				}
-			}else{
-				frame += rolls[j];
-				if(frame == 10){
-					spareFrame = 10;
+				if(rolls[j] == 10){
+					// look at next two entrys
+					if(j < rolls.Count-2){
+						for(int i = j; i<j+3;i++){
+							strikeFrame += rolls[i];
+						}
+						frameList.Add(strikeFrame);
+						strikeFrame = 0;
+					}
+				}else{
+					frame += rolls[j];
+					if(frame == 10){
+						spareFrame = 10;
+						frame = 0;
+						counter = 0;
+					}else{
+						counter++;
+					}
+				}
+
+				if(counter == 2){
+					frameList.Add(frame);
 					frame = 0;
 					counter = 0;
-				}else{
-					counter++;
 				}
+			}else{
+				for(int i=j;i<rolls.Count;i++){
+					frame += rolls[i];
+				}
+				frameList.Add(frame);
+				break;
 			}
 
-			if(counter == 2){
-				frameList.Add(frame);
-				frame = 0;
-				counter = 0;
-			}
 		}
 
 
