@@ -19,11 +19,17 @@ public class ScoreMaster {
 	public static List<int> ScoreFrames (List<int> rolls){
 		List<int> frameList = new List<int>();
 
+		int strikeFrame =0;
 		int frame = 0;
 		int counter = 0;
 		foreach(int roll in rolls){
-			frame += roll;
-			counter++;
+			if(roll == 10){
+				strikeFrame += 10;
+			}else{
+				frame += roll;
+				counter++;
+			}
+
 			if(counter == 2){
 				frameList.Add(frame);
 				frame = 0;
