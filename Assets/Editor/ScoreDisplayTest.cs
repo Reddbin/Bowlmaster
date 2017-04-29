@@ -32,4 +32,11 @@ public class ScoreDisplayTest{
 		string rollsString = "X ";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
+
+	[Test]
+	public void T04BowlSpare(){
+		int[] rolls = {1,9};
+		string rollsString = "1/";
+		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+	}
 }
