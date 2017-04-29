@@ -49,24 +49,24 @@ public class ScoreDisplayTest{
 
 	[Test]
 	public void T06FinalBowlStrike(){
-		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10};
-		string rollsStringA = "111111111111111111";
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,2, 10};
+		string rollsStringA = "111111111111111112";
 		string rollsString = rollsStringA + "X";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
 
 	[Test]
 	public void T07FinalBowlStrike28(){
-		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10, 2,8};
-		string rollsStringA = "111111111111111111";
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,2, 10, 2,8};
+		string rollsStringA = "111111111111111112";
 		string rollsString = rollsStringA + "X2/";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
 
 	[Test]
 	public void T08FinalBowl3Strike(){
-		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10, 10,10};
-		string rollsStringA = "111111111111111111";
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,2, 10, 10,10};
+		string rollsStringA = "111111111111111112";
 		string rollsString = rollsStringA + "XXX";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
