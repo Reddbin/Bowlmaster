@@ -44,11 +44,12 @@ public class PinCounter : MonoBehaviour {
 	{
 		int pinFall = lastSettledCount - CountStanding();
 		lastSettledCount = CountStanding();
-		gameManger.UpdatePinCount(pinFall);
-
 		pinDisplay.color = Color.green;
 		lastStandingCount = -1;  // Indicates new frame
 		ballLeftBox = false;
+		gameManger.Bowl(pinFall);
+
+
 	}
 
 	void UpdateStandingCountAndSettle()

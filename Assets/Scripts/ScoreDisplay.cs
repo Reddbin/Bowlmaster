@@ -1,21 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreDisplay : MonoBehaviour {
-//	private List<int> scores = new List<int>();
-//
-//	// Use this for initialization
-//	void Start () {
-//		
-//	}
-//	
-//	// Update is called once per frame
-//	void Update () {
-//		
-//	}
-//
-//	public void UpdateScore(List<int> latestScore){
-//		scores = latestScore;
-//	}
+	// TODO rename these
+	public Text[] bowlCounts;
+	public Text[] scores;
+
+
+	public void FillRolls(List<int> rolls){
+		string outputString = FormatRolls(rolls);
+		for(int i=0; i< outputString.Length; i++){
+			bowlCounts[i].text = outputString[i].ToString();
+		}
+	}
+
+	public void FillFrames(List<int> frames){
+		for(int i=0;i<frames.Count; i++){
+			scores[i].text = frames[i].ToString();
+		}
+	}
+
+	public static string FormatRolls (List<int> rolls){
+		string output = "";
+		output += rolls[0].ToString();
+		return output;
+	}
 }
