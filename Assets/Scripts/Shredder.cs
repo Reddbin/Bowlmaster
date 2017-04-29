@@ -10,7 +10,7 @@ public class Shredder : MonoBehaviour {
         Pin pin = other.GetComponentInParent<Pin>();
         if (pin)
         {
-            Debug.Log("Exit of: " + pin.name);
+            //Debug.Log("Exit of: " + pin.name);
             pin.DestroyPin();
         }
     }

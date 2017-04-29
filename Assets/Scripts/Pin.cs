@@ -36,16 +36,18 @@ public class Pin : MonoBehaviour {
     {
         if (IsStanding() )
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+			GetComponent<Rigidbody>().useGravity = false;
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			transform.rotation = Quaternion.identity;
             transform.Translate(distToRaise * Vector3.up, Space.World);
-        }
-        
 
+        }
     }
 
     //lowering pins == pins are allowed to fall again, prevents instantanious movement of pin which looks bad
     public void Lower()
     {
-        GetComponent<Rigidbody>().isKinematic = false;
+		//TODO: prevent pins from falling over after reactivating gravity
+		GetComponent<Rigidbody>().useGravity = true;
     }
 }
