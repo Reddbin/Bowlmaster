@@ -24,7 +24,9 @@ public class ScoreDisplay : MonoBehaviour {
 
 	public static string FormatRolls (List<int> rolls){
 		string output = "";
-		output += rolls[0].ToString();
+		for(int i = 0; i < rolls.Count; i++){
+			output += rolls[i].ToString();
+		}
 		return output;
 	}
 }

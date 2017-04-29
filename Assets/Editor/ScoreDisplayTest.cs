@@ -18,4 +18,11 @@ public class ScoreDisplayTest{
 		string rollsString = "1";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
+
+	[Test]
+	public void T02Bowl18 (){
+		int[] rolls = {1,8};
+		string rollsString = "18";
+		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+	}
 }
