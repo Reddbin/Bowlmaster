@@ -26,12 +26,12 @@ public class ScoreDisplay : MonoBehaviour {
 		string output = "";
 		for(int i = 0; i < rolls.Count; i+=2){
 			if(rolls[i] != 10){ // First handle no strike
-				if(rolls[i] == 0){
+				if(rolls[i] == 0){ // display should handle zero differently then other integers
 					output += "-";
 				}else{
 					output += rolls[i].ToString();
 				}
-				if(i+1<rolls.Count){
+				if(i+1<rolls.Count){ // check whether there is a next entry
 					if( rolls[i]+rolls[i+1] == 10){
 						output += "/";
 					}else{
@@ -42,10 +42,15 @@ public class ScoreDisplay : MonoBehaviour {
 						}
 					}
 				}
-			}else{
+			}else if(output.Length <18){ // handle strike in frame 1-9
 				output += " X";
 				i--;
+			}else{// final frame and strike
+				output += "X";
+				i--;
 			}
+			
+
 		}
 		return output;
 	}
