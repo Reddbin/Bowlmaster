@@ -29,7 +29,7 @@ public class ScoreDisplayTest{
 	[Test]
 	public void T03BowlStrike(){
 		int[] rolls = {10};
-		string rollsString = "X ";
+		string rollsString = " X";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
 
@@ -39,4 +39,27 @@ public class ScoreDisplayTest{
 		string rollsString = "1/";
 		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
 	}
+
+	[Test]
+	public void T05Bowl0(){
+		int[] rolls = {0};
+		string rollsString = "-";
+		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+	}
+
+	[Test]
+	public void T05Bowl0(){
+		int[] rolls = {0};
+		string rollsString = "-";
+		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+	}
+
+	[Test]
+	public void T06FinalBowlStrike(){
+		int[] rolls = {1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 10};
+		string rollsStringA = "111111111111111111";
+		string rollsString = rollsStringA + "X";
+		Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+	}
+
 }
